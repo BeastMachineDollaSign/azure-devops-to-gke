@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-deployment
+  labels:
+    app: abhi-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: abhi-test
+  template:
+    metadata:
+      labels:
+        app: abhi-test
+    spec:
+      containers:
+      - name: abhiregmi
+        image: gcr.io/abhi-test-project-250419/abhiregmi:latest
