@@ -15,6 +15,6 @@ echo "$(tput setaf 2)Copy the following into AzureDevOps Service Connections (Pr
 echo "$(tput setaf 1)Connection Name:"
 echo "$(tput setaf 3)gke-cluster"
 echo "$(tput setaf 1)Server URL:"
-echo " $(kubectl cluster-info | grep 'Kubernetes master' | awk '{print $(NF)}')"
+echo "$(kubectl cluster-info | grep 'Kubernetes master' | awk '{print $(NF)}')"
 echo "$(tput setaf 1)Secret:"
 echo "$(tput setaf 3)$TOKEN$(tput sgr0)"
