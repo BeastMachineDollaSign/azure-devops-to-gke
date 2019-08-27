@@ -52,3 +52,8 @@ A brief guide to deploying to GKE.
 ![](img/4.1add-trigger.png)
 
 ![](img/4.2trigger-filter.png)
+
+## Step 5
+0. Verify that the deployment worked correctly by triggering the full pipeline (Pipelines -> Build -> Queue)
+1. Once the build and release are successful, check that your cluster has the new pods by running 'kubectl get po'
+![](img/0.2pod.png)
