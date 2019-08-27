@@ -1,19 +1,29 @@
 # How to deploy to GKE using AzureDevOps
 A brief guide to deploying to GKE.
 
+
+## Explination of files in this repository
+* Dockerfile
+    * [Instructions](https://docs.docker.com/engine/reference/builder/) to build a Docker image
+* kube
+    * Kubernetes deployment files
+        * if you are using [helm](helm.sh), the same steps apply, simply change step 3 to use a helm install/update
+* make_kube_service_accounts.sh
+    * Creates a service-account named *admin-user*, then outputs the account information (including secret token)
+
 #### Pre-requirements / Assumptions:
-Local machine's current kubectl context is pointing to cluster which will be deployed to
-Local machine can run bash scripts
-Local machine has kubectl, grep, jq
-AzureDevOps build is completed (Build and pushes to GKE repository)
-Google Container Registry is being used for deployment
+* Local machine's current kubectl context is pointing to cluster which will be deployed to
+* Local machine can run bash scripts
+* Local machine has kubectl, grep, jq
+* Google Container Registry is being used for storing container images *(Otherwise auth for pulling images from cluster is properly configured)*
+* Existing AzureDevOps build (builds and pushes to above registry, [sample available here](img/0.1build.png))
 
 ## Step 0
 0. Run make_kube_service_accounts.sh
 1. Add new Service Connection in AzureDevOps (Script's output provides more details)
 
 ## Step 1
-0. Add new build step that creates an artifact from your kubernetes deployment files
+0. Add new build step to your existing AzureDevOps build that creates an artifact from your kubernetes deployment files
 
 ![](img/1.1make-artifact.png)
 
@@ -32,7 +42,7 @@ Google Container Registry is being used for deployment
 ![](img/2.3new-task.png)
 
 ## Step 3
-0. Select your cluster from step 0, then enter the path of your deployment file
+0. Select your cluster from step 0, then enter the path of your deployment file into the 'File Path' field
 
 ![](img/3.1kubectl.png)
 
@@ -42,3 +52,8 @@ Google Container Registry is being used for deployment
 ![](img/4.1add-trigger.png)
 
 ![](img/4.2trigger-filter.png)
+
+## Step 5
+0. Verify that the deployment worked correctly by triggering the full pipeline (Pipelines -> Build -> Queue)
+1. Once the build and release are successful, check that your cluster has the new pods by running 'kubectl get po'
+![](img/0.2pod.png)
