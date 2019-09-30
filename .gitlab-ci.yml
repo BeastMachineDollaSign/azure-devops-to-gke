@@ -1,0 +1,12 @@
+stages:
+  - PR
+  
+  
+PR:
+  stage: PR
+  allow_failure: false
+  image: docker:latest
+  script:
+    - echo 'dope'
+  only:
+    - merge_requests
